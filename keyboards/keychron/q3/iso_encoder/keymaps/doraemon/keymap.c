@@ -14,6 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* TODO
+ - macro recorder
+ - panic mode
+ - touches exposé etc sur fn
+*/
+
 #include QMK_KEYBOARD_H
 #include "keymap_french.h"
 #include "sendstring_french.h"
@@ -24,6 +30,7 @@ enum custom_keycodes {
     M_LOREM = SAFE_RANGE,
     M_PW,
     M_BOOT,
+    M_SYMFO,
 };
 
 /* #endregion */
@@ -48,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MAC_FN] = LAYOUT_tkl_f13_iso(
         M_BOOT,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,     RGB_TOG,  _______,  _______,  RGB_TOG,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  M_SYMFO,  _______,  _______,
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  M_LOREM,  _______,  _______,  _______,    M_PW,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,            _______,
@@ -64,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [WIN_FN] = LAYOUT_tkl_f13_iso(
         M_BOOT,   KC_BRID,  KC_BRIU,  _______,  _______,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,    RGB_TOG,  _______,  _______,  RGB_TOG,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  M_SYMFO,  _______,  _______,
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  M_LOREM,  _______,  _______,  _______,    M_PW,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,            _______,
@@ -93,6 +100,7 @@ const char *const LOREMS[] = {
     "Integer luctus justo ac magna dignissim, id egestas. "
 };
 #define LOREMS_LENGTH (sizeof(LOREMS) / sizeof(LOREMS[0])) // Compute array length
+#define TAP_DELAY 50
 
 /* #endregion */
 
@@ -113,8 +121,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case M_BOOT:
             if (record->event.pressed) {
-                rgblight_sethsv_noeeprom(0, 0, 255); // Set Escape key to white
                 reset_keyboard();  // Enter bootloader mode
+            }
+            return false;
+        case M_SYMFO:
+            if (record->event.pressed) {
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY);
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_C), TAP_DELAY);
+                tap_code_delay(KC_HOME, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_V), TAP_DELAY);
+                tap_code_delay(FR_LPRN, TAP_DELAY);  // (
+                tap_code_delay(FR_RPRN, TAP_DELAY);  // )
+                tap_code16_delay(LALT(KC_DOWN), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_C), TAP_DELAY);
+                tap_code_delay(KC_HOME, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_V), TAP_DELAY);
+                tap_code_delay(FR_LPRN, TAP_DELAY); // (
+                tap_code_delay(KC_DEL, TAP_DELAY);
+                tap_code_delay(KC_DEL, TAP_DELAY);
+                tap_code_delay(KC_DEL, TAP_DELAY);
+                tap_code_delay(KC_DEL, TAP_DELAY);
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code_delay(FR_RPRN, TAP_DELAY); // )
+                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY);
             }
             return false;
     }
