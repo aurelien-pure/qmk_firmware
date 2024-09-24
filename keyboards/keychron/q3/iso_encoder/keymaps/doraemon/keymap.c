@@ -16,6 +16,17 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_french.h"
+#include "sendstring_french.h"
+
+/* #region [CUSTOM KEYCODES] */
+
+enum custom_keycodes {
+    M_LOREM = SAFE_RANGE,
+    M_PW,
+    M_BOOT,
+};
+
+/* #endregion */
 
 /* #region [LAYERS] */
 
@@ -36,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LOPT,  KC_LCMD,                                KC_SPC,                                 KC_RCMD,  KC_ROPT,  MO(MAC_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
     [MAC_FN] = LAYOUT_tkl_f13_iso(
-        _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,     RGB_TOG,  _______,  _______,  RGB_TOG,
+        M_BOOT,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,     RGB_TOG,  _______,  _______,  RGB_TOG,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  M_LOREM,  _______,  _______,  _______,    M_PW,
@@ -52,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
     [WIN_FN] = LAYOUT_tkl_f13_iso(
-        _______,  KC_BRID,  KC_BRIU,  _______,  _______,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,    RGB_TOG,  _______,  _______,  RGB_TOG,
+        M_BOOT,   KC_BRID,  KC_BRIU,  _______,  _______,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,    RGB_TOG,  _______,  _______,  RGB_TOG,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,              _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  M_LOREM,  _______,  _______,  _______,    M_PW,
@@ -71,23 +82,14 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 /* #endregion */
 
-/* #region [CUSTOM KEYCODES] */
-
-enum custom_keycodes {
-    M_LOREM = SAFE_RANGE,
-    M_PW,
-};
-
-/* #endregion */
-
 /* #region [CONSTANTS] */
 
 const char *const PW = "pure0sssn13\n";
 const char *const LOREMS[] = {
+    "Lorem ipsum dolor sit amet, ligula nec justo tempor. ",
     "Suspendisse magna ut fermentum tristique nec libero. ",
     "Quisque vel tristique arcu. Suspendisse nec potenti. ",
     "Integer luctus justo ac magna dignissim, id egestas. ",
-    "Lorem ipsum dolor sit amet, ligula nec justo tempor. ",
     "Integer luctus justo ac magna dignissim, id egestas. "
 };
 #define LOREMS_LENGTH (sizeof(LOREMS) / sizeof(LOREMS[0])) // Compute array length
@@ -107,6 +109,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case M_PW:
             if (record->event.pressed) {
                 send_string(PW);
+            }
+            return false;
+        case M_BOOT:
+            if (record->event.pressed) {
+                rgblight_sethsv_noeeprom(0, 0, 255); // Set Escape key to white
+                reset_keyboard();  // Enter bootloader mode
             }
             return false;
     }
