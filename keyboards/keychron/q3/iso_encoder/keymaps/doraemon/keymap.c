@@ -96,11 +96,10 @@ const char *const LOREMS[] = {
     "Lorem ipsum dolor sit amet, ligula nec justo tempor. ",
     "Suspendisse magna ut fermentum tristique nec libero. ",
     "Quisque vel tristique arcu. Suspendisse nec potenti. ",
-    "Integer luctus justo ac magna dignissim, id egestas. ",
     "Integer luctus justo ac magna dignissim, id egestas. "
 };
 #define LOREMS_LENGTH (sizeof(LOREMS) / sizeof(LOREMS[0])) // Compute array length
-#define TAP_DELAY 50
+#define TAP_DELAY 80
 
 /* #endregion */
 
@@ -126,38 +125,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case M_SYMFO:
             if (record->event.pressed) {
-                tap_code16_delay(LALT(KC_UP), TAP_DELAY);
-                tap_code16_delay(LALT(KC_UP), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_C), TAP_DELAY);
-                tap_code_delay(KC_HOME, TAP_DELAY);
-                tap_code_delay(KC_DOWN, TAP_DELAY);
-                tap_code_delay(KC_DOWN, TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_V), TAP_DELAY);
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select getter name
+                tap_code16_delay(LCTL(FR_C), TAP_DELAY); // Copy getter name
+                tap_code_delay(KC_HOME, TAP_DELAY); // Move to line start
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line start
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line start
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
+                send_string("translate()->");
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select property
+                tap_code16_delay(LCTL(FR_V), TAP_DELAY); // Paste getter name
                 tap_code_delay(FR_LPRN, TAP_DELAY);  // (
                 tap_code_delay(FR_RPRN, TAP_DELAY);  // )
-                tap_code16_delay(LALT(KC_DOWN), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
-                tap_code16_delay(LCTL(FR_C), TAP_DELAY);
-                tap_code_delay(KC_HOME, TAP_DELAY);
-                tap_code_delay(KC_DOWN, TAP_DELAY);
-                tap_code_delay(KC_DOWN, TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code16_delay(LALT(KC_DOWN), TAP_DELAY); // ATL+DOWN (move one function down)
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select setter name
+                tap_code16_delay(LCTL(FR_C), TAP_DELAY); // Copy setter name
+                tap_code_delay(KC_HOME, TAP_DELAY); // Move to line start
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line start
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line start
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
+                send_string("translate()->");
                 tap_code16_delay(LCTL(FR_W), TAP_DELAY);
                 tap_code16_delay(LCTL(FR_V), TAP_DELAY);
                 tap_code_delay(FR_LPRN, TAP_DELAY); // (
-                tap_code_delay(KC_DEL, TAP_DELAY);
-                tap_code_delay(KC_DEL, TAP_DELAY);
-                tap_code_delay(KC_DEL, TAP_DELAY);
-                tap_code_delay(KC_DEL, TAP_DELAY);
-                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY);
+                tap_code_delay(KC_DEL, TAP_DELAY); // Delete
+                tap_code_delay(KC_DEL, TAP_DELAY); // Delete
+                tap_code_delay(KC_DEL, TAP_DELAY); // Delete
+                tap_code_delay(KC_DEL, TAP_DELAY); // Delete
+                tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move at the end of the word
                 tap_code_delay(FR_RPRN, TAP_DELAY); // )
-                tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Get back in position
                 tap_code_delay(KC_DOWN, TAP_DELAY);
             }
             return false;
