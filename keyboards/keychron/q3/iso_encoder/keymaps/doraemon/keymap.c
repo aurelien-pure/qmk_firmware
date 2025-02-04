@@ -97,7 +97,7 @@ const char *const LOREMS[] = {
     "Integer luctus justo ac magna dignissim, id egestas. "
 };
 #define LOREMS_LENGTH (sizeof(LOREMS) / sizeof(LOREMS[0])) // Compute array length
-#define TAP_DELAY 80
+#define TAP_DELAY 100
 
 /* #endregion */
 
@@ -134,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 send_string("translate()->");
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select property
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY * 3); // Select property
                 tap_code16_delay(LCTL(FR_V), TAP_DELAY); // Paste getter name
                 tap_code_delay(FR_LPRN, TAP_DELAY);  // (
                 tap_code_delay(FR_RPRN, TAP_DELAY);  // )
@@ -147,7 +147,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 send_string("translate()->");
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY);
+                tap_code16_delay(LCTL(FR_W), TAP_DELAY * 3);
                 tap_code16_delay(LCTL(FR_V), TAP_DELAY);
                 tap_code_delay(FR_LPRN, TAP_DELAY); // (
                 tap_code_delay(KC_DEL, TAP_DELAY); // Delete
