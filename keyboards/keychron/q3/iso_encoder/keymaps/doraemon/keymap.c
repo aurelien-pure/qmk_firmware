@@ -16,6 +16,9 @@
 /* TODO
  - macro recorder
  - touches exposé etc sur fn
+ - fn + arrows pour la souris
+ - fn + ctrl droite pour clic gauche
+ - macro mouse jiggling
 */
 
 #include QMK_KEYBOARD_H
