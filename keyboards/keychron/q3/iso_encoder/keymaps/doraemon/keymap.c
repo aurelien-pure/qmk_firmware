@@ -128,8 +128,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
                 tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select getter name
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select getter name fully
+                tap_code16_delay(LCTL(LSFT(KC_RIGHT)), TAP_DELAY); // Select getter name fully
                 tap_code16_delay(LCTL(FR_C), TAP_DELAY); // Copy getter name
                 tap_code_delay(KC_HOME, TAP_DELAY); // Move to line start
                 tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line down
@@ -138,14 +137,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 send_string("translate()->");
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY * 3); // Select property
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select property fully
+                tap_code16_delay(LCTL(LSFT(KC_RIGHT)), TAP_DELAY); // Select property fully
                 tap_code16_delay(LCTL(FR_V), TAP_DELAY); // Paste getter name
                 tap_code_delay(FR_LPRN, TAP_DELAY);  // (
                 tap_code_delay(FR_RPRN, TAP_DELAY);  // )
                 tap_code16_delay(LALT(KC_DOWN), TAP_DELAY); // ATL+DOWN (move one function down)
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select setter name
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select setter name fully
+                tap_code16_delay(LCTL(LSFT(KC_RIGHT)), TAP_DELAY); // Select setter name fully
                 tap_code16_delay(LCTL(FR_C), TAP_DELAY); // Copy setter name
                 tap_code_delay(KC_HOME, TAP_DELAY); // Move to line start
                 tap_code_delay(KC_DOWN, TAP_DELAY); // Move one line down
@@ -153,8 +150,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 tap_code16_delay(LCTL(KC_RIGHT), TAP_DELAY); // Move one word right
                 send_string("translate()->");
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY * 3); // Select property fully
-                tap_code16_delay(LCTL(FR_W), TAP_DELAY); // Select property fully
+                tap_code16_delay(LCTL(LSFT(KC_RIGHT)), TAP_DELAY); // Select property fully
                 tap_code16_delay(LCTL(FR_V), TAP_DELAY);
                 tap_code_delay(FR_LPRN, TAP_DELAY); // (
                 tap_code_delay(KC_DEL, TAP_DELAY); // Delete
@@ -164,8 +160,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16_delay(KC_END, TAP_DELAY); // Move at the end of the line
                 tap_code16_delay(KC_LEFT, TAP_DELAY); // Move one char back
                 tap_code_delay(FR_RPRN, TAP_DELAY); // )
-                tap_code_delay(KC_DOWN, TAP_DELAY); // Get back in position
+                tap_code_delay(KC_DOWN, TAP_DELAY); // Move to next function
                 tap_code_delay(KC_DOWN, TAP_DELAY);
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
+                tap_code16_delay(LALT(KC_UP), TAP_DELAY); // ATL+UP (move one function up)
+                tap_code_delay(KC_UP, TAP_DELAY);
             }
             return false;
     }
