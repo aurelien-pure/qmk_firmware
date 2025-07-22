@@ -100,7 +100,7 @@ const char *const LOREMS[] = {
     "Integer luctus justo ac magna dignissim, id egestas. "
 };
 #define LOREMS_LENGTH (sizeof(LOREMS) / sizeof(LOREMS[0])) // Compute array length
-#define TAP_DELAY 100
+#define TAP_DELAY 50
 
 /* #endregion */
 
